@@ -5,7 +5,7 @@ const Header = memo((props) => {
     const { addTodo } = props
 
     const onAddTodo = (event) => {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && text) {
             addTodo({
                 id: new Date().valueOf(),
                 text,

@@ -17,7 +17,7 @@ const TodoList = memo(props => {
             <label htmlFor="toggle-all" onClick={checkAll} ></label>
             <ul className="todo-list">
                 {
-                    listTodos.map(todo => <Todo key={todo.id} todo={todo} {...props} />)
+                    listTodos.map((todo, index) => <Todo index={index} key={todo.id} todo={todo} {...props} />)
                 }
             </ul>
 

@@ -24,7 +24,8 @@ class App extends PureComponent {
   state = {
     listTodos: [],
     isCheckedAll: false,
-    status: 'ALL'
+    status: 'ALL',
+    todoEditingId: ''
   }
 
   addTodos = (todo = {}) => {
@@ -67,8 +68,19 @@ class App extends PureComponent {
     }))
   }
 
+  getEditTodo = (id = '') => {
+    this.setState({
+      todoEditingId: id
+    })
+  }
+
+  editTodo = (todo, index) => {
+    const { listTodos } = this.state
+    listTodos.splice(index, 1, todo)
+  }
+
   render() {
-    const { listTodos, isCheckedAll, status } = this.state
+    const { listTodos, isCheckedAll, status, todoEditingId } = this.state
     return (
       <div className="todoapp">
         <Header
@@ -79,7 +91,9 @@ class App extends PureComponent {
           markCompleted={this.markCompleted}
           checkAll={this.checkAll}
           isCheckedAll={isCheckedAll}
-
+          todoEditingId={todoEditingId}
+          getEditTodo={this.getEditTodo}
+          editTodo={this.editTodo}
         />
         <Footer
           activeButton={status}
