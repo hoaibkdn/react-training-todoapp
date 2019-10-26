@@ -5,12 +5,14 @@ import Footer from './components/Footer'
 
 import './css/Todo.css'
 
-const filterByStatus = (listTodos = [], status = '') => {
+const filterByStatus = (listTodos = [], status = '', id) => {
   switch (status) {
     case 'ACTIVE':
       return listTodos.filter(item => !item.isCompleted)
     case 'COMPLETED':
       return listTodos.filter(item => item.isCompleted)
+    case 'REMOVE':
+      return listTodos.filter(item => item.id !== id)
     default:
       return listTodos
   }
@@ -40,7 +42,6 @@ class App extends PureComponent {
     const updatedListTodos = listTodos.map(item => {
       if ((!item.isCompleted && item.id !== id) || (item.isCompleted && item.id === id)) {
         isCheckedAll = false
-        console.log('isCheckedAll ', isCheckedAll)
       }
       if (item.id === id) {
         return { ...item, isCompleted: !item.isCompleted }
@@ -77,6 +78,13 @@ class App extends PureComponent {
   editTodo = (todo, index) => {
     const { listTodos } = this.state
     listTodos.splice(index, 1, todo)
+    this.setState({ listTodos })
+  }
+
+  removeTodo = (id = '') => {
+    this.setState(prevState => ({
+      listTodos: filterByStatus(prevState.listTodos, 'REMOVE', id)
+    }))
   }
 
   render() {
@@ -94,6 +102,7 @@ class App extends PureComponent {
           todoEditingId={todoEditingId}
           getEditTodo={this.getEditTodo}
           editTodo={this.editTodo}
+          removeTodo={this.removeTodo}
         />
         <Footer
           activeButton={status}
