@@ -1,38 +1,42 @@
 import React, { memo } from 'react'
 
 const Footer = memo(props => {
+    const { status, setStatusFilter, numOfTodosLeft, numOfTodos, clearCompleted } = props
     const filterBtns = [{
         title: 'All',
-        isActived: true,
-        onClick: () => { },
+        isActived: status === 'ALL',
+        onClick: () => setStatusFilter('ALL'),
         link: ''
     }, {
         title: 'Active',
-        isActived: false,
-        onClick: () => { },
+        isActived: status === 'ACTIVE',
+        onClick: () => setStatusFilter('ACTIVE'),
         link: 'active'
     }, {
         title: 'Completed',
-        isActived: false,
-        onClick: () => { },
+        isActived: status === 'COMPLETED',
+        onClick: () => setStatusFilter('COMPLETED'),
         link: 'completed'
     }]
     return (
         <footer className="footer">
             <span className="todo-count">
-                <strong>2</strong>
+                <strong>{numOfTodosLeft}</strong>
                 <span> </span>
-                <span>items</span>
+                <span>{numOfTodosLeft <= 1 ? 'item' : 'items'}</span>
                 <span> left</span>
             </span>
             <ul className="filters">
                 {
                     filterBtns.map(btn => (
-                        <FilterBtn key={`btn${btn.title}`} {...btn} />
+                        <FilterBtn
+                            key={`btn${btn.title}`}
+                            {...btn}
+                        />
                     ))
                 }
             </ul>
-            <button className="clear-completed" >Clear completed</button>
+            {numOfTodos > numOfTodosLeft && <button className="clear-completed" onClick={clearCompleted}>Clear completed</button>}
         </footer>
     )
 })

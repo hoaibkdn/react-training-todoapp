@@ -2,7 +2,7 @@ import React, { memo, useState } from 'react'
 
 const Header = memo(props => {
     const [text, setText] = useState('')
-    const { addTodo } = props
+    const { addTodo, isCheckedAll } = props
     const onAddTodo = (e = {}) => {
         if (e.key === 'Enter' && text) {
             addTodo({
@@ -21,6 +21,7 @@ const Header = memo(props => {
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 onKeyPress={(e) => onAddTodo(e)}
+                checked={isCheckedAll}
             />
         </header>
     )
