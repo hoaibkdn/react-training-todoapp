@@ -1,4 +1,11 @@
 import React, { memo, useState } from 'react'
+import {
+    getTodoEditingId,
+    onEditTodo,
+    markCompleted,
+    removeTodo
+} from './../store/actions'
+import { connect } from 'react-redux'
 
 const Todo = memo(props => {
     const { todo, getTodoEditingId, todoEditingId, onEditTodo, index, markCompleted, removeTodo } = props
@@ -41,4 +48,18 @@ const Todo = memo(props => {
     )
 })
 
-export default Todo
+const mapStateToProps = (state, ownProps) => {
+    return {
+        todoEditingId: state.todos.todoEditingId,
+        ...ownProps
+    }
+}
+
+const mapDispatchToProps = {
+    getTodoEditingId,
+    onEditTodo,
+    markCompleted,
+    removeTodo
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Todo)

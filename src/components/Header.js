@@ -1,4 +1,6 @@
 import React, { memo, useState } from 'react'
+import { connect } from 'react-redux'
+import { addTodo } from './../store/actions'
 
 const Header = memo(props => {
     const [text, setText] = useState('')
@@ -27,4 +29,14 @@ const Header = memo(props => {
     )
 })
 
-export default Header
+const mapStateToProps = (state) => {
+    return {
+        isCheckedAll: state.todos.isCheckedAll
+    }
+}
+
+const mapDispatchToProps = {
+    addTodo
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)
